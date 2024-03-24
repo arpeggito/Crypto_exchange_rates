@@ -102,3 +102,5 @@ def crypto_to_snowflake(dataframe):
 get_assets_from_api()
 table_df = manipulate_assets()
 crypto_to_snowflake(table_df)
+
+##test
