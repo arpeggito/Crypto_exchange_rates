@@ -65,6 +65,8 @@ def manipulate_assets():
         inserted_date = pd.Timestamp.now().isoformat()
         table_df["INSERTED_DATE"] = inserted_date
         
+        table_df = table_df.astype({"Rank": int, "Symbol": str, "Name": str, "Price": float})
+        
         return table_df
 
 
