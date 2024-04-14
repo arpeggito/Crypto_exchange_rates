@@ -1,11 +1,9 @@
 import requests
 from datetime import date
 from snowflake.connector import connect
-from snowflake.connector.pandas_tools import write_pandas
 import pandas as pd
 import os
 from dotenv import load_dotenv
-import json
 import snowflake.connector
 from snowflake.connector.pandas_tools import write_pandas
 
@@ -28,8 +26,10 @@ def get_assets_from_api():
 
     except requests.HTTPError as http_err:
         print(f"HTTP error occurred: {http_err}")
+        raise
     except Exception as err:
         print(f"Other error occurred: {err}")
+        raise
 
 
 def manipulate_assets():
@@ -86,10 +86,10 @@ def crypto_to_snowflake(dataframe):
 
     schema_name = "COINCAP"
     table_name = "COINCAP_EXCHANGE_RATES"
-    conn.cursor().execute("CREATE DATABASE IF NOT EXISTS CRYPTO_DB")
+    conn.cursor().execute(f"CREATE DATABASE IF NOT EXISTS CRYPTO_DB")
     conn.cursor().execute("USE DATABASE CRYPTO_DB")
-    conn.cursor().execute("CREATE SCHEMA IF NOT EXISTS Coincap")
-    conn.cursor().execute("USE SCHEMA Coincap")
+    conn.cursor().execute("CREATE SCHEMA IF NOT EXISTS COINCAP")
+    conn.cursor().execute("USE SCHEMA COINCAP")
     conn.cursor().execute(
         "CREATE OR REPLACE TABLE "
         "Coincap_Exchange_Rates(Rank integer, Symbol string, Name string, Price float)"
