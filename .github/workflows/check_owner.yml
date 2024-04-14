@@ -20,6 +20,14 @@ jobs:
       - name: Install dependencies
         run: pip install pyyaml
 
+      # - name: Check Owner Key
+      #   run: |
+      #     find . -name "*.yml" -not -path "./.github/workflows/*" -exec python .github/workflows/check_owner.py {} \;
+      
       - name: Check Owner Key
         run: |
-          find . -name "*.yml" -not -path "./.github/workflows/*" -exec python .github/workflows/check_owner.py {} \;
+          STATUS=0
+          for file in $(find . -name "*.yml" -not -path "./.github/workflows/*"); do
+            python .github/workflows/check_owner.py "$file" || STATUS=1
+          done
+          exit $STATUS
