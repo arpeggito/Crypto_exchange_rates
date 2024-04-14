@@ -8,6 +8,8 @@ on:
 jobs:
  check-owner:
     runs-on: ubuntu-latest
+    container: python:3.10-bullseye
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
