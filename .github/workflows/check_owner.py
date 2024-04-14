@@ -7,7 +7,7 @@ def check_owner(file_path):
     with open(file_path, 'r') as file:
         try:
             data = yaml.safe_load(file)
-            if 'Owner' not in data:
+            if 'Owner' not in data or 'owner' not in data:
                 print(f"Error: The file {file_path} does not contain the 'Owner:' key.")
                 return False
             return True
