@@ -1,2 +1,23 @@
-Owner: Holly Pyles
+version: 2
 
+models:
+  - name: braze_booking_upload
+    description: "This model takes the new and changed booking details data comparing to last updated and will be uploaded to Braze."
+
+    Meta:
+      owner: "Marketing"
+
+    columns:
+      - name: external_id
+        description: "cm_customer_uuid in our data warehouse. This is the unique identifier for each user in Braze. It is the primary key for this table."
+        tests:
+          - not_null
+          - unique
+
+      - name: updated_at
+        description: "The timestamp when the update was made in our data warehouse."
+        tests:
+          - not_null
+
+      - name: payload
+        description: "The json file that contains booking detail data."
