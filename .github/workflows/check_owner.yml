@@ -1,0 +1,25 @@
+name: Check Owner Key in YML Files
+
+on:
+ pull_request:
+    paths:
+      - '**.yml'
+
+jobs:
+ check-owner:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Check Owner Key
+        run: |
+          find . -name "*.yml" -not -path "./.github/workflows/*" -exec python .github/workflows/check_owner.py {} \;
