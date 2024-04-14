@@ -22,5 +22,14 @@ jobs:
 
       - name: Check Owner Key
         run: |
-          find . -name "*.yml" -not -path "./.github/workflows/*" -exec python .github/workflows/check_owner.py {} \;
+          STATUS=0
+          FILES=$(find . -name "*.yml" -not -path "./.github/workflows/*")
+          for file in $FILES; do
+            echo "Checking file: $file"
+            python .github/workflows/check_owner.py "$file" || STATUS=1
+          done
+          if [ $STATUS -ne 0 ]; then
+            echo "One or more YAML files do not contain the required 'Owner' key."
+            exit 1
+          fi
 
