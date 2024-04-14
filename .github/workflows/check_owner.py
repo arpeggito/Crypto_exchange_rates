@@ -1,7 +1,7 @@
 # check_owner.py
 import sys
 import yaml
-from github import workflow
+
 
 def check_owner(file_path):
     with open(file_path, 'r') as file:
@@ -21,5 +21,4 @@ if __name__ == "__main__":
         print("The file contains the 'Owner:' key.")
         sys.exit(0)
     else:
-        workflow.set_failed(f"Script failed: {e}")   
         sys.exit(1)
